@@ -1,0 +1,6 @@
+{
+  "name": "Freelanching Demo Teen Redesign",
+  "description": "A modern SaaS-style website redesign for Freelanching Demo's teen freelance and earning platform, including an interactive landing page and a feature-rich personal dashboard.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

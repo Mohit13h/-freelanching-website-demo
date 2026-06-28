@@ -1,0 +1,14 @@
+# Robots.txt file for Freelanching Demo Teen Platform
+# Ref: https://www.freelanchingdemo.com/teens
+
+User-agent: *
+Allow: /
+Allow: /index.html
+Allow: /style.css
+Allow: /src/script.ts
+Disallow: /dashboard.html
+Disallow: /src/dashboard-script.ts
+
+# Host and Sitemap locations
+Host: www.freelanchingdemo.com
+Sitemap: https://www.freelanchingdemo.com/teens/sitemap.xml

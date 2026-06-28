@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-brand-purple: #6C63FF;
+  --color-brand-indigo: #4F46E5;
+  --color-brand-dark: #0F0F1A;
+
+  /* Immersive UI extra-soft corner overrides */
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+  --radius-4xl: 2.5rem;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+}
+
+/* Custom dashboard style enhancements */
+.sidebar-active {
+  background-color: rgba(79, 70, 229, 0.08) !important;
+  color: #4F46E5 !important;
+  border-left: none !important;
+  border-radius: 0.75rem !important; /* rounded-xl */
+  font-weight: 600 !important;
+}
+.dark .sidebar-active {
+  background-color: rgba(129, 140, 248, 0.15) !important;
+  color: #818CF8 !important;
+  border-left: none !important;
+  border-radius: 0.75rem !important; /* rounded-xl */
+  font-weight: 600 !important;
+}
+
+.tab-content {
+  display: none;
+}
+.tab-content.active {
+  display: block;
+}

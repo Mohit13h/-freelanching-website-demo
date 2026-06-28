@@ -1,0 +1,857 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teen Dashboard - Freelanching Demo</title>
+    <meta name="description" content="Manage your freelance projects, track your monthly earnings, claim your verified work experience certificates, and connect with top startups on Freelanching Demo." />
+    <meta name="robots" content="noindex, nofollow" />
+
+    <!-- Google Fonts & Tailwind CSS -->
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body class="bg-slate-50 text-slate-900 antialiased transition-colors duration-300 dark:bg-brand-dark dark:text-slate-100 font-sans">
+
+    <!-- Dashboard Main Layout Container -->
+    <div class="min-h-screen flex flex-col md:flex-row">
+
+      <!-- Mobile Top Navigation Bar -->
+      <header class="md:hidden bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between sticky top-0 z-40 dark:bg-slate-900 dark:border-slate-800">
+        <a href="/" class="flex items-center gap-2">
+          <div class="h-8 w-8 bg-brand-indigo rounded-lg flex items-center justify-center text-white font-display font-bold text-base">
+            F
+          </div>
+          <span class="font-display font-bold text-lg text-slate-900 dark:text-white">funn<span class="text-brand-indigo">gro</span></span>
+        </a>
+        <button id="mobile-sidebar-toggle" class="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Toggle Sidebar Menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+      </header>
+
+      <!-- Sidebar Navigation Menu (Fixed on desktop, drawer on mobile) -->
+      <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-slate-200 flex flex-col justify-between transform -translate-x-full md:translate-x-0 md:static transition-transform duration-300 ease-in-out dark:bg-slate-900 dark:border-slate-800">
+        
+        <!-- Top Branding / Logo -->
+        <div>
+          <div class="p-6 border-b border-slate-100 flex items-center justify-between dark:border-slate-800/60">
+            <a href="/" class="flex items-center gap-2 group">
+              <div class="h-9 w-9 bg-brand-indigo rounded-xl flex items-center justify-center text-white font-display font-bold text-lg shadow-md shadow-brand-indigo/15">
+                F
+              </div>
+              <span class="font-display font-bold text-xl text-slate-900 group-hover:text-brand-purple transition-colors dark:text-white">funn<span class="text-brand-indigo">gro</span></span>
+            </a>
+            <button id="mobile-sidebar-close" class="md:hidden p-2 text-slate-400 hover:text-slate-600 dark:hover:text-white">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+          </div>
+
+          <!-- Navigation Links -->
+          <nav class="p-4 space-y-1" aria-label="Sidebar Navigation Links">
+            <button data-tab="overview" class="sidebar-item w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-slate-600 font-semibold text-sm hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800/50 sidebar-active transition-all">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z"></path></svg>
+              <span>Dashboard</span>
+            </button>
+            <button data-tab="projects" class="sidebar-item w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-slate-600 font-semibold text-sm hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800/50 transition-all">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+              <span>Projects</span>
+            </button>
+            <button data-tab="earnings" class="sidebar-item w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-slate-600 font-semibold text-sm hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800/50 transition-all">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              <span>Earnings</span>
+            </button>
+            <button data-tab="certificates" class="sidebar-item w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-slate-600 font-semibold text-sm hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800/50 transition-all">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
+              <span>Certificates</span>
+            </button>
+            <button data-tab="messages" class="sidebar-item w-full flex items-center justify-between px-4 py-3 rounded-xl text-slate-600 font-semibold text-sm hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800/50 transition-all">
+              <div class="flex items-center gap-3.5">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                <span>Messages</span>
+              </div>
+              <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full animate-bounce">2</span>
+            </button>
+            <button data-tab="profile" class="sidebar-item w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-slate-600 font-semibold text-sm hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800/50 transition-all">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+              <span>My Profile</span>
+            </button>
+            <button data-tab="settings" class="sidebar-item w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-slate-600 font-semibold text-sm hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800/50 transition-all">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+              <span>Settings</span>
+            </button>
+          </nav>
+        </div>
+
+        <!-- Sidebar Bottom Footer User Profile Quick card -->
+        <div class="p-4 border-t border-slate-100 dark:border-slate-800">
+          <div class="flex items-center gap-3 p-2 bg-slate-50 rounded-2xl dark:bg-slate-800/60">
+            <img src="https://picsum.photos/seed/aarav/150/150" alt="Aarav Mehta profile" class="w-10 h-10 rounded-full object-cover border border-slate-200 dark:border-slate-700" />
+            <div class="flex-1 min-w-0">
+              <h5 class="text-xs font-bold text-slate-900 truncate dark:text-white">Aarav Mehta</h5>
+              <span class="text-[10px] text-emerald-500 font-semibold flex items-center gap-1">● Pro Earner</span>
+            </div>
+            <a href="/" class="p-1.5 text-slate-400 hover:text-red-500 dark:hover:text-red-400" aria-label="Logout">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+            </a>
+          </div>
+        </div>
+
+      </aside>
+
+      <!-- Sidebar Mobile overlay back-drop -->
+      <div id="sidebar-overlay" class="hidden fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-sm"></div>
+
+      <!-- Main Dashboard Content Window -->
+      <main class="flex-1 overflow-y-auto px-4 sm:px-8 py-6 max-w-7xl mx-auto w-full space-y-6">
+        
+        <!-- Header Quick Summary -->
+        <header class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200 pb-6 dark:border-slate-800">
+          <div>
+            <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white" id="welcome-message">Hello, Aarav!</h1>
+            <p class="text-sm text-slate-500 dark:text-slate-400">Welcome back. You have 2 submissions pending feedback and 1 new project opportunity.</p>
+          </div>
+          
+          <!-- Calendar / Status -->
+          <div class="flex items-center gap-3">
+            <div class="bg-white px-4 py-2 rounded-xl border border-slate-200 shadow-sm text-xs font-semibold flex items-center gap-2 text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300">
+              <svg class="w-4 h-4 text-brand-indigo" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+              <span id="live-date">June 24, 2026</span>
+            </div>
+            
+            <button data-tab="profile" class="px-4 py-2 bg-brand-indigo text-white font-semibold text-xs rounded-xl hover:bg-brand-purple shadow transition-all">
+              Edit Portfolio
+            </button>
+          </div>
+        </header>
+
+        <!-- ==========================================
+             TAB 1: OVERVIEW PANEL
+             ========================================== -->
+        <section id="tab-overview" class="tab-content active space-y-8">
+          
+          <!-- Key Metrics Grid -->
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-4" id="overview-metrics">
+            
+            <!-- Metric 1: Total Earnings (Immersive UI Highlighted Card) -->
+            <div class="bg-brand-indigo p-6 rounded-3xl shadow-xl shadow-brand-indigo/15 flex flex-col justify-between text-white space-y-3">
+              <div class="flex justify-between items-center text-indigo-100">
+                <span class="text-xs font-bold uppercase tracking-widest">Total Earnings</span>
+                <span class="p-1.5 bg-white/15 text-white rounded-lg"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></span>
+              </div>
+              <div class="space-y-1">
+                <div class="text-2xl sm:text-3xl font-black text-white">₹ 12,850</div>
+                <p class="text-[10px] text-indigo-200 font-bold flex items-center gap-0.5">🚀 +₹2,400 this month</p>
+              </div>
+            </div>
+
+            <!-- Metric 2: Completed Projects -->
+            <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex flex-col justify-between space-y-3 dark:bg-slate-800 dark:border-slate-700">
+              <div class="flex justify-between items-center text-slate-400">
+                <span class="text-xs font-semibold uppercase tracking-wider">Completed</span>
+                <span class="p-1.5 bg-brand-indigo/10 text-brand-indigo rounded-lg dark:bg-indigo-500/10"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></span>
+              </div>
+              <div class="space-y-1">
+                <div class="text-2xl sm:text-3xl font-black text-slate-800 dark:text-white">5 Projects</div>
+                <p class="text-[10px] text-slate-500 font-bold dark:text-slate-400">100% feedback score</p>
+              </div>
+            </div>
+
+            <!-- Metric 3: Active Gigs -->
+            <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex flex-col justify-between space-y-3 dark:bg-slate-800 dark:border-slate-700">
+              <div class="flex justify-between items-center text-slate-400">
+                <span class="text-xs font-semibold uppercase tracking-wider">Active Projects</span>
+                <span class="p-1.5 bg-amber-50 text-amber-500 rounded-lg dark:bg-amber-500/10"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></span>
+              </div>
+              <div class="space-y-1">
+                <div class="text-2xl sm:text-3xl font-black text-slate-800 dark:text-white">2 Active</div>
+                <p class="text-[10px] text-amber-500 font-bold">1 due in 3 days</p>
+              </div>
+            </div>
+
+            <!-- Metric 4: Certificates -->
+            <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex flex-col justify-between space-y-3 dark:bg-slate-800 dark:border-slate-700">
+              <div class="flex justify-between items-center text-slate-400">
+                <span class="text-xs font-semibold uppercase tracking-wider">Certificates</span>
+                <span class="p-1.5 bg-purple-50 text-brand-purple rounded-lg dark:bg-purple-500/10"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg></span>
+              </div>
+              <div class="space-y-1">
+                <div class="text-2xl sm:text-3xl font-black text-slate-800 dark:text-white">3 Earned</div>
+                <p class="text-[10px] text-brand-purple font-bold">Verified on LinkedIn</p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Quick Actions & Dynamic Activities -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <!-- Left: Recent Active Project Progress card -->
+            <div class="lg:col-span-7 bg-white p-6 rounded-3xl border border-slate-100 shadow-sm space-y-6 dark:bg-slate-800 dark:border-slate-700">
+              <div class="flex justify-between items-center">
+                <h3 class="text-lg font-bold">Featured Live Project</h3>
+                <span class="text-xs text-brand-indigo font-bold hover:underline cursor-pointer" data-tab="projects">All Projects</span>
+              </div>
+
+              <!-- Main project detail card -->
+              <div class="bg-slate-50 p-5 rounded-2xl space-y-4 dark:bg-slate-900/60">
+                <div class="flex justify-between items-start">
+                  <div class="space-y-1">
+                    <span class="text-[10px] font-bold uppercase text-brand-indigo bg-brand-indigo/10 px-2.5 py-0.5 rounded-full dark:bg-brand-indigo/20">Graphic & UI Design</span>
+                    <h4 class="font-bold text-base text-slate-900 dark:text-white">Shopify Store Header Redesign</h4>
+                    <span class="text-xs text-slate-400">Client: Shopify India</span>
+                  </div>
+                  <div class="text-right">
+                    <span class="text-base font-extrabold font-mono text-emerald-500">₹ 3,500</span>
+                    <span class="block text-[10px] text-slate-400">Escrow Protected</span>
+                  </div>
+                </div>
+
+                <!-- Custom visual Progress Bar -->
+                <div class="space-y-2">
+                  <div class="flex justify-between text-xs text-slate-500 dark:text-slate-400">
+                    <span>Task progress: Drafting phase</span>
+                    <span class="font-bold text-brand-indigo">75% Complete</span>
+                  </div>
+                  <div class="w-full h-2 bg-slate-200 rounded-full overflow-hidden dark:bg-slate-700">
+                    <div class="h-full bg-gradient-to-r from-brand-indigo to-brand-purple w-[75%] rounded-full"></div>
+                  </div>
+                </div>
+
+                <!-- Next Milestones list -->
+                <div class="flex items-center justify-between pt-2 border-t border-slate-200 dark:border-slate-700 text-xs">
+                  <span class="text-slate-400">Next milestone due: June 27, 2026</span>
+                  <button class="px-3.5 py-1.5 bg-white border border-slate-200 rounded-lg font-bold text-[11px] text-slate-700 hover:bg-slate-100 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-200 transition-colors">Submit Work</button>
+                </div>
+              </div>
+              
+              <!-- Quick Tip -->
+              <div class="flex items-start gap-3 bg-indigo-50/50 p-4 rounded-xl text-slate-600 dark:bg-brand-indigo/10 dark:text-slate-300">
+                <span class="text-lg">💡</span>
+                <p class="text-xs leading-relaxed"><strong>Pro-Tip:</strong> Complete 2 more projects in Graphic Design with a score of 4.5+ stars to unlock the <strong>Exclusive Creator Tier</strong> which offers 25% higher payment rates!</p>
+              </div>
+            </div>
+
+            <!-- Right: Activity Logs / Achievements -->
+            <div class="lg:col-span-5 bg-white p-6 rounded-3xl border border-slate-100 shadow-sm space-y-6 dark:bg-slate-800 dark:border-slate-700">
+              <h3 class="text-lg font-bold">Recent Updates</h3>
+              <div class="space-y-4" id="recent-activity-list">
+                
+                <!-- Activity 1 -->
+                <div class="flex gap-3.5 items-start">
+                  <div class="w-2.5 h-2.5 bg-emerald-500 rounded-full mt-1.5"></div>
+                  <div class="flex-1 min-w-0">
+                    <h5 class="text-xs font-bold text-slate-900 dark:text-white">Payment Approved (₹ 2,400)</h5>
+                    <p class="text-[11px] text-slate-500 truncate dark:text-slate-400">Swiggy Instagram Creative Brief #3</p>
+                    <span class="text-[9px] text-slate-400 font-semibold font-mono">Yesterday • 4:32 PM</span>
+                  </div>
+                </div>
+
+                <!-- Activity 2 -->
+                <div class="flex gap-3.5 items-start">
+                  <div class="w-2.5 h-2.5 bg-brand-indigo rounded-full mt-1.5"></div>
+                  <div class="flex-1 min-w-0">
+                    <h5 class="text-xs font-bold text-slate-900 dark:text-white">Certificate Awarded</h5>
+                    <p class="text-[11px] text-slate-500 truncate dark:text-slate-400">Razorpay Fintech Writing Micro-Internship</p>
+                    <span class="text-[9px] text-slate-400 font-semibold font-mono">June 20, 2026 • 11:05 AM</span>
+                  </div>
+                </div>
+
+                <!-- Activity 3 -->
+                <div class="flex gap-3.5 items-start">
+                  <div class="w-2.5 h-2.5 bg-amber-500 rounded-full mt-1.5"></div>
+                  <div class="flex-1 min-w-0">
+                    <h5 class="text-xs font-bold text-slate-900 dark:text-white">Feedback Received</h5>
+                    <p class="text-[11px] text-slate-500 truncate dark:text-slate-400">Cred App UI Asset Slicing (4.9 / 5 Stars)</p>
+                    <span class="text-[9px] text-slate-400 font-semibold font-mono">June 15, 2026 • 2:15 PM</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ==========================================
+             TAB 2: PROJECTS SECTION
+             ========================================== -->
+        <section id="tab-projects" class="tab-content space-y-6">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+              <h2 class="text-xl font-bold text-slate-900 dark:text-white">Browse & Manage Projects</h2>
+              <p class="text-xs text-slate-400">Apply for high-paying remote gigs or manage your existing deliverables with client companies.</p>
+            </div>
+            
+            <!-- Filters -->
+            <div class="flex gap-2 w-full sm:w-auto overflow-x-auto pb-1" id="project-filters">
+              <button data-filter="all" class="px-4 py-1.5 bg-brand-indigo text-white text-xs font-bold rounded-lg whitespace-nowrap shadow-sm shadow-brand-indigo/15">All Projects</button>
+              <button data-filter="active" class="px-4 py-1.5 bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 text-xs font-bold rounded-lg whitespace-nowrap dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300">Active Gigs</button>
+              <button data-filter="applied" class="px-4 py-1.5 bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 text-xs font-bold rounded-lg whitespace-nowrap dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300">Applied</button>
+              <button data-filter="completed" class="px-4 py-1.5 bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 text-xs font-bold rounded-lg whitespace-nowrap dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300">Completed</button>
+            </div>
+          </div>
+
+          <!-- Projects Table Grid -->
+          <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden dark:bg-slate-800 dark:border-slate-700">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse" id="projects-table">
+                <thead>
+                  <tr class="border-b border-slate-100 bg-slate-50/50 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:bg-slate-900/30 dark:border-slate-700/50">
+                    <th class="p-4">Project Name & Client</th>
+                    <th class="p-4">Category</th>
+                    <th class="p-4">Status</th>
+                    <th class="p-4">Payment</th>
+                    <th class="p-4 text-right">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700/60" id="projects-tbody">
+                  
+                  <!-- Row 1: Active -->
+                  <tr class="project-row" data-status="active">
+                    <td class="p-4">
+                      <div class="space-y-0.5">
+                        <span class="font-bold text-slate-900 dark:text-white">Shopify Store Header Redesign</span>
+                        <p class="text-xs text-slate-400">Shopify India</p>
+                      </div>
+                    </td>
+                    <td class="p-4 text-xs text-slate-500 dark:text-slate-400">UI / Graphic Design</td>
+                    <td class="p-4">
+                      <span class="inline-flex items-center gap-1.5 text-xs text-amber-500 font-bold bg-amber-50 px-2 py-0.5 rounded-full dark:bg-amber-500/10"><span class="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse"></span> Active</span>
+                    </td>
+                    <td class="p-4 font-mono font-bold text-slate-900 dark:text-white">₹ 3,500</td>
+                    <td class="p-4 text-right">
+                      <button class="px-3 py-1 bg-brand-indigo text-white text-xs rounded-lg font-semibold hover:bg-brand-purple transition-all shadow shadow-brand-indigo/10">Submit Work</button>
+                    </td>
+                  </tr>
+
+                  <!-- Row 2: Completed -->
+                  <tr class="project-row" data-status="completed">
+                    <td class="p-4">
+                      <div class="space-y-0.5">
+                        <span class="font-bold text-slate-900 dark:text-white">Swiggy Instagram Creative Brief #3</span>
+                        <p class="text-xs text-slate-400">Swiggy India</p>
+                      </div>
+                    </td>
+                    <td class="p-4 text-xs text-slate-500 dark:text-slate-400">Social Media Creative</td>
+                    <td class="p-4">
+                      <span class="inline-flex items-center gap-1.5 text-xs text-emerald-500 font-bold bg-emerald-50 px-2 py-0.5 rounded-full dark:bg-emerald-500/10"><span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span> Completed</span>
+                    </td>
+                    <td class="p-4 font-mono font-bold text-slate-900 dark:text-white">₹ 2,400</td>
+                    <td class="p-4 text-right">
+                      <button class="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs rounded-lg font-semibold dark:bg-slate-700 dark:text-slate-200 transition-all">View Invoice</button>
+                    </td>
+                  </tr>
+
+                  <!-- Row 3: Applied -->
+                  <tr class="project-row" data-status="applied">
+                    <td class="p-4">
+                      <div class="space-y-0.5">
+                        <span class="font-bold text-slate-900 dark:text-white">Razorpay Fintech Blog Copywriting</span>
+                        <p class="text-xs text-slate-400">Razorpay</p>
+                      </div>
+                    </td>
+                    <td class="p-4 text-xs text-slate-500 dark:text-slate-400">Content Writing</td>
+                    <td class="p-4">
+                      <span class="inline-flex items-center gap-1.5 text-xs text-blue-500 font-bold bg-blue-50 px-2 py-0.5 rounded-full dark:bg-blue-500/10"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> Applied</span>
+                    </td>
+                    <td class="p-4 font-mono font-bold text-slate-900 dark:text-white">₹ 4,000</td>
+                    <td class="p-4 text-right">
+                      <span class="text-xs text-slate-400 italic">Under review</span>
+                    </td>
+                  </tr>
+
+                  <!-- Row 4: Completed -->
+                  <tr class="project-row" data-status="completed">
+                    <td class="p-4">
+                      <div class="space-y-0.5">
+                        <span class="font-bold text-slate-900 dark:text-white">Zomato Food Fest Vector Assets</span>
+                        <p class="text-xs text-slate-400">Zomato</p>
+                      </div>
+                    </td>
+                    <td class="p-4 text-xs text-slate-500 dark:text-slate-400">Vector Illustration</td>
+                    <td class="p-4">
+                      <span class="inline-flex items-center gap-1.5 text-xs text-emerald-500 font-bold bg-emerald-50 px-2 py-0.5 rounded-full dark:bg-emerald-500/10"><span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span> Completed</span>
+                    </td>
+                    <td class="p-4 font-mono font-bold text-slate-900 dark:text-white">₹ 1,800</td>
+                    <td class="p-4 text-right">
+                      <button class="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs rounded-lg font-semibold dark:bg-slate-700 dark:text-slate-200 transition-all">View Invoice</button>
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             TAB 3: EARNINGS ANALYTICS
+             ========================================== -->
+        <section id="tab-earnings" class="tab-content space-y-6">
+          <div>
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white">Earnings Analytics</h2>
+            <p class="text-xs text-slate-400">Track your weekly income, visual progress, and check your parent verification status.</p>
+          </div>
+
+          <!-- Financial Breakdown Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            
+            <!-- Ledger Wallet -->
+            <div class="bg-gradient-to-br from-brand-indigo to-brand-purple p-6 rounded-2xl text-white space-y-4 shadow-lg shadow-brand-indigo/15">
+              <span class="text-[10px] font-bold uppercase tracking-wider bg-white/20 px-2.5 py-0.5 rounded-full">Secure Escrow Wallet</span>
+              <div class="space-y-1">
+                <span class="block text-xs text-white/85">Available Balance</span>
+                <span class="text-3xl font-extrabold font-mono">₹ 3,500</span>
+              </div>
+              <div class="pt-4 border-t border-white/10 flex justify-between">
+                <span class="text-[10px] text-white/85">Linked to Parent Console</span>
+                <button class="text-xs font-bold underline hover:text-indigo-200">Withdraw Funds</button>
+              </div>
+            </div>
+
+            <!-- Total Pocket Savings Goal tracking -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4 dark:bg-slate-800 dark:border-slate-700">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-brand-purple bg-purple-50 px-2.5 py-0.5 rounded-full dark:bg-brand-purple/10">Goal Tracker</span>
+              <div class="space-y-1">
+                <span class="block text-xs text-slate-400">Goal: Buy iPad Pro (₹ 45,000)</span>
+                <div class="flex justify-between items-baseline">
+                  <span class="text-2xl font-extrabold font-mono text-slate-900 dark:text-white">₹ 12,850</span>
+                  <span class="text-xs font-bold text-brand-purple">28% Saved</span>
+                </div>
+              </div>
+              <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden dark:bg-slate-700">
+                <div class="h-full bg-brand-purple w-[28%] rounded-full"></div>
+              </div>
+            </div>
+
+            <!-- Verification panel -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4 dark:bg-slate-800 dark:border-slate-700">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-500 bg-emerald-50 px-2.5 py-0.5 rounded-full dark:bg-emerald-500/10">Parent Approval Gate</span>
+              <div class="flex gap-3 items-start">
+                <div class="p-1.5 bg-emerald-50 text-emerald-500 rounded-lg dark:bg-emerald-500/15">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                </div>
+                <div>
+                  <h4 class="text-sm font-bold text-slate-900 dark:text-white">Onboarding Verified</h4>
+                  <p class="text-[11px] text-slate-400">Escrow and parent authorizations are fully synchronized. Earning paths are fully safe.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Dynamic SVG Interactive Analytics Line Chart -->
+          <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm space-y-4 dark:bg-slate-800 dark:border-slate-700">
+            <div class="flex justify-between items-center">
+              <h3 class="text-base font-bold">Earnings Progression (6 Months)</h3>
+              <div class="flex items-center gap-4 text-xs font-semibold text-slate-400">
+                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-brand-indigo"></span> Earning trend</span>
+              </div>
+            </div>
+
+            <!-- Responsive SVG line chart -->
+            <div class="relative w-full h-64" id="chart-container">
+              <svg class="w-full h-full" viewBox="0 0 600 240" preserveAspectRatio="none" aria-label="Line graph tracking earnings from January to June">
+                
+                <!-- Grid vertical lines -->
+                <line x1="50" y1="20" x2="50" y2="200" stroke="#F1F5F9" class="dark:stroke-slate-700/50" />
+                <line x1="150" y1="20" x2="150" y2="200" stroke="#F1F5F9" class="dark:stroke-slate-700/50" />
+                <line x1="250" y1="20" x2="250" y2="200" stroke="#F1F5F9" class="dark:stroke-slate-700/50" />
+                <line x1="350" y1="20" x2="350" y2="200" stroke="#F1F5F9" class="dark:stroke-slate-700/50" />
+                <line x1="450" y1="20" x2="450" y2="200" stroke="#F1F5F9" class="dark:stroke-slate-700/50" />
+                <line x1="550" y1="20" x2="550" y2="200" stroke="#F1F5F9" class="dark:stroke-slate-700/50" />
+
+                <!-- Grid horizontal lines -->
+                <line x1="50" y1="20" x2="550" y2="20" stroke="#F1F5F9" class="dark:stroke-slate-700/50" />
+                <line x1="50" y1="80" x2="550" y2="80" stroke="#F1F5F9" class="dark:stroke-slate-700/50" />
+                <line x1="50" y1="140" x2="550" y2="140" stroke="#F1F5F9" class="dark:stroke-slate-700/50" />
+                <line x1="50" y1="200" x2="550" y2="200" stroke="#CBD5E1" class="dark:stroke-slate-700" />
+
+                <!-- Axis Labels -->
+                <text x="50" y="220" fill="#94A3B8" font-size="10" text-anchor="middle" font-family="system-ui">Jan</text>
+                <text x="150" y="220" fill="#94A3B8" font-size="10" text-anchor="middle" font-family="system-ui">Feb</text>
+                <text x="250" y="220" fill="#94A3B8" font-size="10" text-anchor="middle" font-family="system-ui">Mar</text>
+                <text x="350" y="220" fill="#94A3B8" font-size="10" text-anchor="middle" font-family="system-ui">Apr</text>
+                <text x="450" y="220" fill="#94A3B8" font-size="10" text-anchor="middle" font-family="system-ui">May</text>
+                <text x="550" y="220" fill="#94A3B8" font-size="10" text-anchor="middle" font-family="system-ui">Jun</text>
+
+                <text x="35" y="24" fill="#94A3B8" font-size="9" text-anchor="end" font-family="system-ui">₹15k</text>
+                <text x="35" y="84" fill="#94A3B8" font-size="9" text-anchor="end" font-family="system-ui">₹10k</text>
+                <text x="35" y="144" fill="#94A3B8" font-size="9" text-anchor="end" font-family="system-ui">₹5k</text>
+                <text x="35" y="204" fill="#94A3B8" font-size="9" text-anchor="end" font-family="system-ui">₹0</text>
+
+                <!-- Gradient fill path -->
+                <path d="M 50 180 Q 150 140 250 110 T 350 90 T 450 60 T 550 45 L 550 200 L 50 200 Z" fill="url(#chartGrad)" opacity="0.15" />
+
+                <!-- Line path representing trend -->
+                <path d="M 50 180 Q 150 140 250 110 T 350 90 T 450 60 T 550 45" stroke="#4F46E5" stroke-width="4" stroke-linecap="round" fill="none" class="animate-[draw_2s_ease-out]" />
+
+                <!-- Glow Data Dots -->
+                <circle cx="50" cy="180" r="5" fill="#4F46E5" />
+                <circle cx="150" cy="140" r="5" fill="#4F46E5" />
+                <circle cx="250" cy="110" r="5" fill="#4F46E5" />
+                <circle cx="350" cy="90" r="5" fill="#4F46E5" />
+                <circle cx="450" cy="60" r="5" fill="#4F46E5" />
+                <circle cx="550" cy="45" r="5" fill="#4F46E5" />
+
+                <defs>
+                  <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#4F46E5" />
+                    <stop offset="100%" stop-color="#FFFFFF" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             TAB 4: CERTIFICATES EARNED
+             ========================================== -->
+        <section id="tab-certificates" class="tab-content space-y-6">
+          <div>
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white">Work Certificates</h2>
+            <p class="text-xs text-slate-400">All certificates generated are verified, cryptographically signed, and shareable directly to LinkedIn and Resume files.</p>
+          </div>
+
+          <!-- Certificates cards grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="certificates-grid">
+            
+            <!-- Certificate 1 -->
+            <article class="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm flex flex-col justify-between dark:bg-slate-800 dark:border-slate-700" id="cert-card-1">
+              <!-- Premium layout border header -->
+              <div class="p-6 bg-slate-50 border-b border-slate-100 space-y-1 text-center relative dark:bg-slate-900/40 dark:border-slate-700">
+                <!-- Verified Badge -->
+                <div class="absolute top-4 right-4 bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 text-[9px] px-2 py-0.5 rounded-full font-bold">VERIFIED</div>
+                
+                <span class="font-display font-black text-xs tracking-wider text-slate-400">CERTIFICATE OF COMPLETION</span>
+                <h4 class="font-bold text-slate-900 dark:text-white truncate">Social Media Creative Brief</h4>
+                <p class="text-[10px] text-slate-400">Awarded by: Swiggy India</p>
+              </div>
+              <div class="p-6 space-y-4">
+                <div class="space-y-1 text-xs">
+                  <p class="text-slate-500"><strong class="text-slate-700 dark:text-slate-200 font-semibold">Recipient:</strong> Aarav Mehta</p>
+                  <p class="text-slate-500"><strong class="text-slate-700 dark:text-slate-200 font-semibold">Credential ID:</strong> FNG-2026-9812A</p>
+                  <p class="text-slate-500"><strong class="text-slate-700 dark:text-slate-200 font-semibold">Date of Issuance:</strong> June 23, 2026</p>
+                </div>
+                <div class="pt-4 border-t border-slate-100 dark:border-slate-700 flex gap-2">
+                  <button class="flex-1 py-2 text-center border border-slate-200 text-slate-700 rounded-xl hover:bg-slate-50 text-xs font-bold dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800" onclick="alert('Downloading high resolution PDF of Certificate FNG-2026-9812A...')">Download PDF</button>
+                  <button class="py-2 px-3 bg-brand-indigo text-white rounded-xl hover:bg-brand-purple text-xs font-bold flex items-center justify-center shadow shadow-brand-indigo/15" aria-label="Share certificate on LinkedIn" onclick="alert('Redirecting to LinkedIn share portal with certificate metadata...')">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <!-- Certificate 2 -->
+            <article class="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm flex flex-col justify-between dark:bg-slate-800 dark:border-slate-700" id="cert-card-2">
+              <div class="p-6 bg-slate-50 border-b border-slate-100 space-y-1 text-center relative dark:bg-slate-900/40 dark:border-slate-700">
+                <div class="absolute top-4 right-4 bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 text-[9px] px-2 py-0.5 rounded-full font-bold">VERIFIED</div>
+                <span class="font-display font-black text-xs tracking-wider text-slate-400">CERTIFICATE OF COMPLETION</span>
+                <h4 class="font-bold text-slate-900 dark:text-white truncate">Fintech Writing Micro-Internship</h4>
+                <p class="text-[10px] text-slate-400">Awarded by: Razorpay</p>
+              </div>
+              <div class="p-6 space-y-4">
+                <div class="space-y-1 text-xs">
+                  <p class="text-slate-500"><strong class="text-slate-700 dark:text-slate-200 font-semibold">Recipient:</strong> Aarav Mehta</p>
+                  <p class="text-slate-500"><strong class="text-slate-700 dark:text-slate-200 font-semibold">Credential ID:</strong> FNG-2026-4401X</p>
+                  <p class="text-slate-500"><strong class="text-slate-700 dark:text-slate-200 font-semibold">Date of Issuance:</strong> June 19, 2026</p>
+                </div>
+                <div class="pt-4 border-t border-slate-100 dark:border-slate-700 flex gap-2">
+                  <button class="flex-1 py-2 text-center border border-slate-200 text-slate-700 rounded-xl hover:bg-slate-50 text-xs font-bold dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800" onclick="alert('Downloading Certificate FNG-2026-4401X...')">Download PDF</button>
+                  <button class="py-2 px-3 bg-brand-indigo text-white rounded-xl hover:bg-brand-purple text-xs font-bold flex items-center justify-center shadow shadow-brand-indigo/15" aria-label="Share certificate on LinkedIn" onclick="alert('Redirecting to LinkedIn...')">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <!-- Certificate 3 -->
+            <article class="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm flex flex-col justify-between dark:bg-slate-800 dark:border-slate-700" id="cert-card-3">
+              <div class="p-6 bg-slate-50 border-b border-slate-100 space-y-1 text-center relative dark:bg-slate-900/40 dark:border-slate-700">
+                <div class="absolute top-4 right-4 bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 text-[9px] px-2 py-0.5 rounded-full font-bold">VERIFIED</div>
+                <span class="font-display font-black text-xs tracking-wider text-slate-400">CERTIFICATE OF COMPLETION</span>
+                <h4 class="font-bold text-slate-900 dark:text-white truncate">App UI Asset Slicing</h4>
+                <p class="text-[10px] text-slate-400">Awarded by: Cred India</p>
+              </div>
+              <div class="p-6 space-y-4">
+                <div class="space-y-1 text-xs">
+                  <p class="text-slate-500"><strong class="text-slate-700 dark:text-slate-200 font-semibold">Recipient:</strong> Aarav Mehta</p>
+                  <p class="text-slate-500"><strong class="text-slate-700 dark:text-slate-200 font-semibold">Credential ID:</strong> FNG-2026-1185G</p>
+                  <p class="text-slate-500"><strong class="text-slate-700 dark:text-slate-200 font-semibold">Date of Issuance:</strong> June 14, 2026</p>
+                </div>
+                <div class="pt-4 border-t border-slate-100 dark:border-slate-700 flex gap-2">
+                  <button class="flex-1 py-2 text-center border border-slate-200 text-slate-700 rounded-xl hover:bg-slate-50 text-xs font-bold dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800" onclick="alert('Downloading Certificate FNG-2026-1185G...')">Download PDF</button>
+                  <button class="py-2 px-3 bg-brand-indigo text-white rounded-xl hover:bg-brand-purple text-xs font-bold flex items-center justify-center shadow shadow-brand-indigo/15" aria-label="Share certificate on LinkedIn" onclick="alert('Redirecting to LinkedIn...')">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                  </button>
+                </div>
+              </div>
+            </article>
+
+          </div>
+        </section>
+
+        <!-- ==========================================
+             TAB 5: MESSAGES (CHAT INTERFACE)
+             ========================================== -->
+        <section id="tab-messages" class="tab-content">
+          <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden h-[500px] flex dark:bg-slate-800 dark:border-slate-700" id="messages-container">
+            
+            <!-- Conversations List sidebar (left) -->
+            <div class="w-full sm:w-80 border-r border-slate-200 flex flex-col dark:border-slate-700" id="chat-sidebar">
+              <div class="p-4 border-b border-slate-100 font-bold text-sm text-slate-500 uppercase tracking-wider dark:border-slate-700">Conversations</div>
+              <div class="flex-1 overflow-y-auto divide-y divide-slate-50 dark:divide-slate-700" id="convos-list">
+                
+                <!-- Convo 1 -->
+                <button class="w-full p-4 text-left hover:bg-slate-50 bg-slate-100/70 flex items-center gap-3 dark:hover:bg-slate-800/80 dark:bg-slate-700/50" id="convo-shopify">
+                  <div class="w-10 h-10 rounded-full bg-emerald-500/15 text-emerald-500 flex items-center justify-center font-bold font-display">S</div>
+                  <div class="flex-1 min-w-0">
+                    <div class="flex justify-between items-baseline">
+                      <span class="text-xs font-bold text-slate-900 truncate dark:text-white">Shopify India Support</span>
+                      <span class="text-[9px] text-slate-400 font-semibold font-mono">11:05 AM</span>
+                    </div>
+                    <p class="text-[11px] text-slate-500 truncate dark:text-slate-400">Can you adjust the font tracking slightly on the final header sketch?</p>
+                  </div>
+                </button>
+
+                <!-- Convo 2 -->
+                <button class="w-full p-4 text-left hover:bg-slate-50 flex items-center gap-3 dark:hover:bg-slate-800/80" id="convo-swiggy">
+                  <div class="w-10 h-10 rounded-full bg-orange-500/15 text-orange-500 flex items-center justify-center font-bold font-display">S</div>
+                  <div class="flex-1 min-w-0">
+                    <div class="flex justify-between items-baseline">
+                      <span class="text-xs font-bold text-slate-900 truncate dark:text-white">Swiggy Campaign Team</span>
+                      <span class="text-[9px] text-slate-400 font-semibold font-mono">Yesterday</span>
+                    </div>
+                    <p class="text-[11px] text-slate-500 truncate dark:text-slate-400">Excellent work! Earning approved and sent to wallet.</p>
+                  </div>
+                </button>
+
+              </div>
+            </div>
+
+            <!-- Chat Window panel (right) -->
+            <div class="hidden sm:flex flex-1 flex-col bg-slate-50/40 dark:bg-slate-900/10" id="chat-window">
+              <!-- Header of Chat -->
+              <div class="p-4 bg-white border-b border-slate-200 flex items-center gap-3 dark:bg-slate-800 dark:border-slate-700" id="chat-window-header">
+                <div class="w-9 h-9 rounded-full bg-emerald-500/15 text-emerald-500 flex items-center justify-center font-bold font-display text-sm">S</div>
+                <div>
+                  <h4 class="text-xs font-bold text-slate-900 dark:text-white" id="chat-title">Shopify India Support</h4>
+                  <span class="text-[10px] text-emerald-500 font-semibold">● Online • Project Manager</span>
+                </div>
+              </div>
+
+              <!-- Message Streams -->
+              <div class="flex-1 overflow-y-auto p-4 space-y-4 text-xs" id="chat-messages-stream">
+                <!-- Message received -->
+                <div class="flex items-start gap-2.5 max-w-sm">
+                  <div class="p-3 bg-white border border-slate-100 rounded-2xl rounded-tl-none dark:bg-slate-800 dark:border-slate-700 dark:text-slate-200">
+                    <p>Hi Aarav, thanks for sending over the initially drafted designs for our store banner redesign! They look incredibly fresh and fits the teenage audience beautifully.</p>
+                    <span class="block text-[9px] text-slate-400 font-semibold text-right mt-1.5 font-mono">10:45 AM</span>
+                  </div>
+                </div>
+
+                <!-- Message sent -->
+                <div class="flex items-start gap-2.5 max-w-sm ml-auto">
+                  <div class="p-3 bg-brand-indigo text-white rounded-2xl rounded-tr-none ml-auto shadow shadow-brand-indigo/10">
+                    <p>Thank you! I am glad you liked the initial layouts. I kept the illustrations vibrant and high-contrast to catch eyes.</p>
+                    <span class="block text-[9px] text-indigo-200 text-right mt-1.5 font-mono">10:52 AM</span>
+                  </div>
+                </div>
+
+                <!-- Message received -->
+                <div class="flex items-start gap-2.5 max-w-sm" id="latest-incoming">
+                  <div class="p-3 bg-white border border-slate-100 rounded-2xl rounded-tl-none dark:bg-slate-800 dark:border-slate-700 dark:text-slate-200">
+                    <p>Awesome. Can you adjust the font tracking slightly on the final header sketch? Once that is done, submit it on the panel and I will approve the payout instantly!</p>
+                    <span class="block text-[9px] text-slate-400 font-semibold text-right mt-1.5 font-mono">11:05 AM</span>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Chat Input Footer -->
+              <form class="p-4 bg-white border-t border-slate-200 flex gap-2 dark:bg-slate-800 dark:border-slate-700" id="chat-form">
+                <input type="text" id="chat-input" placeholder="Type a professional message to client..." class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs focus:ring-1 focus:ring-brand-purple focus:outline-none dark:bg-slate-900 dark:border-slate-700 dark:text-white" required />
+                <button type="submit" class="px-5 bg-brand-indigo hover:bg-brand-purple text-white text-xs font-bold rounded-xl transition-colors shadow shadow-brand-indigo/10">Send</button>
+              </form>
+
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ==========================================
+             TAB 6: PROFILE PORTFOLIO
+             ========================================== -->
+        <section id="tab-profile" class="tab-content space-y-6">
+          <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm grid grid-cols-1 md:grid-cols-12 gap-8 dark:bg-slate-800 dark:border-slate-700" id="profile-container">
+            
+            <!-- Left Portrait & Basic details Column -->
+            <div class="md:col-span-4 flex flex-col items-center text-center space-y-4">
+              <div class="relative group">
+                <img src="https://picsum.photos/seed/aarav/250/250" alt="Aarav Mehta full profile" class="w-32 h-32 rounded-full object-cover border-4 border-indigo-50 dark:border-indigo-900/50 shadow" />
+                <button class="absolute bottom-0 right-0 p-2 bg-brand-indigo text-white rounded-full hover:bg-brand-purple shadow" aria-label="Upload profile photograph" onclick="alert('Triggering profile photo upload dialog...')">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+                </button>
+              </div>
+              
+              <div class="space-y-1">
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Aarav Mehta</h3>
+                <span class="text-xs text-brand-indigo font-bold bg-indigo-50 px-2.5 py-0.5 rounded-full dark:bg-brand-indigo/15">Graphic & UI Designer</span>
+                <p class="text-[10px] text-slate-400 mt-1">Onboarded June 2025 • verified</p>
+              </div>
+
+              <!-- Profile summary statistics -->
+              <div class="w-full grid grid-cols-3 gap-2 border-y border-slate-100 py-4 text-center dark:border-slate-700">
+                <div class="space-y-0.5">
+                  <span class="block text-xs font-bold text-slate-900 dark:text-white">4.9 ★</span>
+                  <span class="text-[9px] text-slate-400 uppercase">Rating</span>
+                </div>
+                <div class="space-y-0.5 border-x border-slate-100 dark:border-slate-700">
+                  <span class="block text-xs font-bold text-slate-900 dark:text-white">5</span>
+                  <span class="text-[9px] text-slate-400 uppercase">Gigs Done</span>
+                </div>
+                <div class="space-y-0.5">
+                  <span class="block text-xs font-bold text-slate-900 dark:text-white">₹12.8k</span>
+                  <span class="text-[9px] text-slate-400 uppercase">Earned</span>
+                </div>
+              </div>
+
+              <!-- Parents linked console badge -->
+              <div class="w-full bg-slate-50 p-3.5 rounded-2xl flex items-center gap-2 text-left dark:bg-slate-900/30">
+                <span class="text-xl">🛡️</span>
+                <div>
+                  <h5 class="text-[10px] font-bold text-slate-900 dark:text-white">Parent Authorized</h5>
+                  <p class="text-[9px] text-slate-400">Escrow transfers managed safely by Priya Mehta.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Profile Bio / Skills Portfolio Column -->
+            <div class="md:col-span-8 space-y-6">
+              
+              <!-- Biography -->
+              <div class="space-y-2">
+                <h4 class="text-sm font-bold uppercase tracking-wider text-slate-400">About Me</h4>
+                <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                  Hi, I'm Aarav! I'm a 16-year-old high school student who loves designing beautiful graphics, illustrations, and user interfaces. I started self-learning Figma and Adobe Photoshop 2 years ago. Through Freelanching Demo, I work on remote design deliverables for real startups in my after-school hours. My goal is to build a top-tier design portfolio for college admissions!
+                </p>
+              </div>
+
+              <!-- Skills List with tags -->
+              <div class="space-y-3">
+                <h4 class="text-sm font-bold uppercase tracking-wider text-slate-400">My Skills</h4>
+                <div class="flex flex-wrap gap-2" id="profile-skills-tags">
+                  <span class="text-xs font-semibold bg-indigo-50 text-brand-indigo px-3 py-1 rounded-xl dark:bg-brand-indigo/10 dark:text-indigo-300">Figma UI Design</span>
+                  <span class="text-xs font-semibold bg-indigo-50 text-brand-indigo px-3 py-1 rounded-xl dark:bg-brand-indigo/10 dark:text-indigo-300">Adobe Photoshop</span>
+                  <span class="text-xs font-semibold bg-indigo-50 text-brand-indigo px-3 py-1 rounded-xl dark:bg-brand-indigo/10 dark:text-indigo-300">Vector Illustration</span>
+                  <span class="text-xs font-semibold bg-indigo-50 text-brand-indigo px-3 py-1 rounded-xl dark:bg-brand-indigo/10 dark:text-indigo-300">Social Ad Mockups</span>
+                  <span class="text-xs font-semibold bg-indigo-50 text-brand-indigo px-3 py-1 rounded-xl dark:bg-brand-indigo/10 dark:text-indigo-300">Infographic Design</span>
+                  <!-- Add skill button -->
+                  <button class="text-xs font-bold text-brand-indigo hover:text-brand-purple flex items-center gap-1" onclick="alert('Opening Add Skill popup dialogue...')">
+                    <span>+ Add Skill</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Portfolio links -->
+              <div class="space-y-3">
+                <h4 class="text-sm font-bold uppercase tracking-wider text-slate-400">My Portfolio Gigs</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <!-- Portfolio Card 1 -->
+                  <div class="bg-slate-50 rounded-xl p-4 flex gap-3 items-center dark:bg-slate-900/30">
+                    <img src="https://picsum.photos/seed/portfolio1/120/120" alt="Portfolio graphic cover" class="w-12 h-12 rounded-lg object-cover" referrerPolicy="no-referrer" />
+                    <div class="flex-1 min-w-0">
+                      <h5 class="text-xs font-bold text-slate-900 truncate dark:text-white">Zomato Food Banner</h5>
+                      <span class="text-[10px] text-slate-400 block truncate">Vector Illustration assets</span>
+                    </div>
+                  </div>
+                  <!-- Portfolio Card 2 -->
+                  <div class="bg-slate-50 rounded-xl p-4 flex gap-3 items-center dark:bg-slate-900/30">
+                    <img src="https://picsum.photos/seed/portfolio2/120/120" alt="Portfolio graphic cover" class="w-12 h-12 rounded-lg object-cover" referrerPolicy="no-referrer" />
+                    <div class="flex-1 min-w-0">
+                      <h5 class="text-xs font-bold text-slate-900 truncate dark:text-white">Cred UI Assets Slices</h5>
+                      <span class="text-[10px] text-slate-400 block truncate">Figma UI element polishing</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ==========================================
+             TAB 7: SETTINGS PANEL
+             ========================================== -->
+        <section id="tab-settings" class="tab-content space-y-6">
+          <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-8 dark:bg-slate-800 dark:border-slate-700" id="settings-panel">
+            
+            <!-- Category 1: Preferences Theme -->
+            <div class="space-y-4">
+              <h3 class="text-base font-bold border-b border-slate-100 pb-2 dark:border-slate-700">App Preferences</h3>
+              
+              <div class="flex justify-between items-center text-sm">
+                <div>
+                  <h4 class="font-bold text-slate-900 dark:text-white">Dark Mode Theme</h4>
+                  <p class="text-xs text-slate-400">Toggle between high-contrast dark style and standard white layouts.</p>
+                </div>
+                <!-- Toggle Switch -->
+                <button id="theme-toggle-dashboard" class="w-11 h-6 bg-slate-200 dark:bg-brand-indigo rounded-full relative p-0.5 transition-colors focus:outline-none" aria-label="Toggle Dark mode theme">
+                  <span class="w-5 h-5 bg-white rounded-full absolute top-0.5 left-0.5 dark:left-5 transition-all shadow-md"></span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Category 2: Notifications -->
+            <div class="space-y-4">
+              <h3 class="text-base font-bold border-b border-slate-100 pb-2 dark:border-slate-700">Notification Settings</h3>
+              
+              <!-- Checkbox 1 -->
+              <div class="flex justify-between items-center text-sm">
+                <div>
+                  <h4 class="font-bold text-slate-900 dark:text-white">Email New Gigs</h4>
+                  <p class="text-xs text-slate-400">Receive alert digests when a verified client posts projects matching your selected focus skills.</p>
+                </div>
+                <input type="checkbox" checked class="w-5 h-5 accent-brand-indigo cursor-pointer" />
+              </div>
+
+              <!-- Checkbox 2 -->
+              <div class="flex justify-between items-center text-sm">
+                <div>
+                  <h4 class="font-bold text-slate-900 dark:text-white">Escrow Payment Alerts</h4>
+                  <p class="text-xs text-slate-400">Get notified immediately when clients place funds in Escrow or complete payouts.</p>
+                </div>
+                <input type="checkbox" checked class="w-5 h-5 accent-brand-indigo cursor-pointer" />
+              </div>
+            </div>
+
+            <!-- Category 3: Account details -->
+            <div class="space-y-4">
+              <h3 class="text-base font-bold border-b border-slate-100 pb-2 dark:border-slate-700">Guardian Console Controls</h3>
+              
+              <div class="flex justify-between items-center text-sm">
+                <div>
+                  <h4 class="font-bold text-slate-900 dark:text-white">Linked Guardian Email</h4>
+                  <p class="text-xs text-slate-400">Priya.Mehta.Consultant@gmail.com (Verified parent consent authority)</p>
+                </div>
+                <button class="px-3.5 py-1.5 border border-slate-200 rounded-lg font-bold text-xs text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800" onclick="alert('Parent authorization key resent to Priya.Mehta.Consultant@gmail.com')">Resend Key</button>
+              </div>
+            </div>
+
+            <!-- Save preferences -->
+            <div class="pt-4 border-t border-slate-100 dark:border-slate-700 text-right">
+              <button class="px-6 py-2.5 bg-brand-indigo hover:bg-brand-purple text-white text-xs font-bold rounded-xl shadow transition-colors" onclick="alert('Your preferences and settings were successfully updated!')">Save Settings</button>
+            </div>
+
+          </div>
+        </section>
+
+      </main>
+
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="/src/dashboard-script.ts"></script>
+  </body>
+</html>
